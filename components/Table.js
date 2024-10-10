@@ -82,12 +82,12 @@ export default function Table() {
 
   return (
     <>
-      <div className="pt-3 noselect" style={{height:"100%", display:"flex", alignItems:"start", justifyContent:"center", backgroundColor: "#fff0db"}}>
-          <div style={{height:"600px", width:"600px"}}>
-            <div className="row g-0">
+      <div className="pt-3 noselect flex-sm-row flex-column-reverse justify-content-sm-center justify-content-end" style={{height:"100%", display:"flex", alignItems:"start", backgroundColor: "#fff0db"}}>
+          <div className="cards">
+            <div className="row g-0 mt-3 mt-sm-0">
               {randomSort.map((num, i) => {
                 return (
-                  <div key={i} className="col-3 p-2">
+                  <div key={i} className="col-3 p-sm-2 p-1">
                     <div onClick={()=> {
                       if(!clickedCard.includes(i) && !rightCard.includes(i)) {
                         flip(i);
@@ -104,7 +104,7 @@ export default function Table() {
               })}
             </div>
           </div>
-          <div className="d-flex flex-column ms-3 pt-3">
+          <div className="d-flex flex-sm-column align-items-center ms-3 pt-0 pt-sm-3 ">
             <div style={{color: playing ===2 ? "green" : "black", textAlign: "center"}}>Turns: {flipTurn} </div>
             <StopWatch playing={playing} />
             <button className="btn btn-outline-secondary" onClick={() => reset()}>{playing ===2 ? "play again" : "reset"}</button>
