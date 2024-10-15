@@ -1,35 +1,29 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import StopWatch from "./StopWatch";
 import { Roboto_Mono } from "next/font/google";
 
 const robo = Roboto_Mono({ subsets: ['latin'] });
 
-const cards = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
 const demoCards = ["11", "12", "21", "22", "31", "32", "41", "42", "51", "52", "61", "62", "71", "72", "81", "82"];
-
-//mode 0 = pic with pic ; 1= pic with word
 const themes = [
-  { type: "awei", borderColor: "#ffb660", backgroundColor: "#fff0db", value: 0, label: "阿偉", mode: 0},
+  { type: "awei", borderColor: "#ffb660", backgroundColor: "#fff0db", value: 0, label: "阿偉", mode: 0 },
   { type: "soymilk", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 1, label: "豆乳", mode: 0 },
-  { type: "panda", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 2, label: "胖達", mode: 0 },
-  { type: "chiikawa", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 3, label: "吉伊", mode: 0 },
-  { type: "human", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 4, label: "人", mode: 1 },
-  { type: "jpAnimal", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 5, label: "日語-動物", mode: 1 },
+  // other themes...
 ];
 
 export default function Table() {
   const [clickedCard, setClickedCard] = useState([]);
   const [randomSort, setRandomSort] = useState([]);
   const [rightCard, setRightCard] = useState([]);
-  const [playing, setPlaying] = useState(0); // 0: before play, 1: playing, 2: end
+  const [playing, setPlaying] = useState(0); 
   const [flipTurn, setFlipTurn] = useState(0);
   const [theme, setTheme] = useState(themes[0]);
   const [themePicked, setThemePicked] = useState(false);
   const [gameScore, setGameScore] = useState(0);
   const [gameTime, setGameTime] = useState(0);
   const [isWaiting, setIsWaiting] = useState(false);
-  const [selectedThemeIndex, setSelectedThemeIndex] = useState(0); // Track selected theme index
+  const [selectedThemeIndex, setSelectedThemeIndex] = useState(0);
 
   const reset = () => {
     setClickedCard([]);
@@ -38,24 +32,28 @@ export default function Table() {
     setFlipTurn(0);
     setPlaying(0);
     setGameScore(0);
-    setGameTime(0); // Reset game time
+    setGameTime(0);
     setThemePicked(false);
   };
 
   useEffect(() => {
     shuffleCards();
+    preloadImages();
   }, []);
+
+  const preloadImages = () => {
+    randomSort.forEach(num => {
+      const imageSrc = `/images/${theme.type}/${theme.mode === 0 ? num[0] : num}.jpg`;
+      const img = new Image();
+      img.src = imageSrc;
+    });
+    const backImg = new Image();
+    backImg.src = "/images/back.jpg";
+  };
 
   useEffect(() => {
     if (clickedCard.length === 2) {
-      console.log(randomSort[clickedCard[0]][0]);
-      console.log(randomSort[clickedCard[1]]);
-      console.log(typeof randomSort[clickedCard[1]]);
-
       if (randomSort[clickedCard[0]][0] === randomSort[clickedCard[1]][0]) {
-        // clikedCard =[1, 4];
-          //const randomSort = ["11", "12", "21", "22", "31", "32", "41", "42", "51", "52", "61", "62", "71", "72", "81", "82"];
-
         setRightCard(prev => [...prev, clickedCard[0], clickedCard[1]]);
         setClickedCard([]);
       } else {
@@ -67,7 +65,6 @@ export default function Table() {
       }
     }
   }, [clickedCard]);
-  
 
   const handleTimeChange = (totalSeconds) => {
     setGameTime(totalSeconds);
@@ -95,7 +92,7 @@ export default function Table() {
     setGameScore(score);
   };
 
-  function shuffleCards() {
+  const shuffleCards = () => {
     const randomSortTemp = [];
     const randomIndices = new Set();
     while (randomSortTemp.length < demoCards.length) {
@@ -106,7 +103,7 @@ export default function Table() {
       }
     }
     setRandomSort(randomSortTemp);
-  }
+  };
 
   const flip = (i) => {
     if (isWaiting || rightCard.includes(i)) return;
@@ -128,7 +125,7 @@ export default function Table() {
     <div
       className={`pt-3 noselect flex-sm-row flex-column-reverse justify-content-sm-center justify-content-end ${robo.className}`}
       style={{ height: "100%", display: "flex", alignItems: "start", backgroundColor: theme.backgroundColor }}
-    > 
+    >
       <div className="cards">
         <div className="row g-0 mt-3 mt-sm-0">
           {randomSort.map((num, i) => (
@@ -147,7 +144,7 @@ export default function Table() {
                     style={{ height: "100%", backgroundColor: "white", borderRadius: "6px", border: rightCard.includes(i) ? `2px solid ${theme.borderColor}` : "none" }}
                   >
                     {(clickedCard.includes(i) || rightCard.includes(i)) ? (
-                      <img src={`/images/${theme.type}/${theme.mode === 0? num[0]: num}.jpg`} alt={`Card ${num}`} style={{ height: "75px" }} />
+                      <img src={`/images/${theme.type}/${theme.mode === 0 ? num[0] : num}.jpg`} alt={`Card ${num}`} style={{ height: "75px" }} />
                     ) : (
                       <img src="/images/back.jpg" alt="Card back" style={{ height: "75px" }} />
                     )}
@@ -165,9 +162,9 @@ export default function Table() {
           {playing === 2 ? "Play Again" : "Reset"}
         </button>
         {!themePicked ? (
-          <select 
-            className="m-2" 
-            value={selectedThemeIndex} 
+          <select
+            className="m-2"
+            value={selectedThemeIndex}
             onChange={(e) => {
               const index = Number(e.target.value);
               setSelectedThemeIndex(index);
