@@ -6,10 +6,15 @@ import { Roboto_Mono } from "next/font/google";
 const robo = Roboto_Mono({ subsets: ['latin'] });
 
 const demoCards = ["11", "12", "21", "22", "31", "32", "41", "42", "51", "52", "61", "62", "71", "72", "81", "82"];
+
+//mode 0 = pic with pic ; 1= pic with word
 const themes = [
   { type: "awei", borderColor: "#ffb660", backgroundColor: "#fff0db", value: 0, label: "阿偉", mode: 0 },
   { type: "soymilk", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 1, label: "豆乳", mode: 0 },
-  // other themes...
+  { type: "panda", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 2, label: "胖達", mode: 0 },
+  { type: "chiikawa", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 3, label: "吉伊", mode: 0 },
+  { type: "human", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 4, label: "人", mode: 1 },
+  { type: "jpAnimal", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 5, label: "日語-動物", mode: 1 },
 ];
 
 export default function Table() {
