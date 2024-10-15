@@ -127,7 +127,7 @@ export default function Table() {
     <div
       className={`pt-3 noselect flex-sm-row flex-column-reverse justify-content-sm-center justify-content-end ${robo.className}`}
       style={{ height: "100%", display: "flex", alignItems: "start", backgroundColor: theme.backgroundColor }}
-    >
+    > 
       <div className="cards">
         <div className="row g-0 mt-3 mt-sm-0">
           {randomSort.map((num, i) => (
