@@ -15,6 +15,7 @@ const themes = [
   { type: "chiikawa", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 3, label: "吉伊", mode: 0 },
   { type: "human", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 4, label: "人", mode: 1 },
   { type: "jpAnimal", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 5, label: "日語-動物", mode: 1 },
+  { type: "pokemon", borderColor: "#beda84", backgroundColor: "#f1ece9", value: 6, label: "神奇寶貝", mode: 1 },
 ];
 
 export default function Table() {
