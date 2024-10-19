@@ -149,7 +149,7 @@ export default function Table() {
                     {(clickedCard.includes(i) || rightCard.includes(i)) ? (
                       <img src={`/images/${theme.type}/${theme.mode === 0? num[0]: num}.jpg`} alt={`Card ${num}`} style={{ height: "75px" }} />
                     ) : (
-                      <img src="/images/back.jpg" alt="Card back" style={{ height: "75px" }} />
+                      <img className="back-pic" src="/images/back.jpg" alt="Card back" style={{ height: "35px" }} />
                     )}
                   </div>
                 </div>
